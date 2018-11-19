@@ -31,6 +31,7 @@ namespace WebAppAspnetcore.Controllers
            
             if (ModelState.IsValid)
             {
+                _mailService.SendMail("breno.thales@gmail.com", model.Observacao, $"From:{model.Email}, Messege:{model.Message}");
 
             }else{
 

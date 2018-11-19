@@ -18,6 +18,7 @@
     <Folder Include="Views\Shared\" />
     <Folder Include="Pages\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
