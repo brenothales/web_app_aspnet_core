@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title </title>
+</head>
+<body>
+    <header>
+        <h1>Bem-vindo</h1>
+        <menu>
+            <ul>
+                <li><a asp-controller="App" asp-action="Index">Home</a></li>
+                <li><a asp-controller="App" asp-action="Contact">Contato</a></li>
+                <li><a asp-controller="App" asp-action="About">Sobre</a></li>
+            </ul>
+        </menu>
+    </header>
+    @RenderBody()
+
+    <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/index.js"></script>
+@RenderSection("scripts", false)
+</body>
+</html>
