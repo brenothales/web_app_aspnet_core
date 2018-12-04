@@ -7,6 +7,9 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using WebAppAspnetcore.Data;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace WebAppAspnetcore
 {
@@ -14,11 +17,34 @@ namespace WebAppAspnetcore
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var host = BuildWebHost(args);
+
+            SeedDB(host);
+
+            host.Run();
+            //CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        private static void SeedDB(IWebHost host)
+        {
+            var scopeFactory = host.Services.GetService<IServiceScopeFactory>();
+            using (var scope = scopeFactory.CreateScope())
+            {
+                var seeder = scope.ServiceProvider.GetService<DutchSeeder>();
+                seeder.Seed();
+            }
+
+        }
+
+        public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                   .ConfigureAppConfiguration(SetupConfiguration)
+                  .UseStartup<Startup>().Build();
+
+        private static void SetupConfiguration(WebHostBuilderContext ctx, IConfigurationBuilder builder)
+        {
+            builder.Sources.Clear();
+            builder.AddJsonFile("config.json", false, true);
+        }
     }
 }

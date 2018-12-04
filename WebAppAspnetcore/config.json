@@ -1,0 +1,15 @@
+﻿{
+  "Color":{
+    "Favorite": "bluw"
+  },
+
+  "ConnectionStrings":{
+    "DutchConnection": "Server=localhost,1433;Database=CrudWebAspNetCore;User=sa;Password=reallyStrongPwd123;"
+  },
+  "Logging":{
+    "LogLevel":{
+      "Default":"Information",
+      "Microsoft": "Warning"
+    }
+  }
+}

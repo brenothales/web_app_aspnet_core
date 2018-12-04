@@ -5,8 +5,8 @@ namespace WebAppAspnetcore.ViewModels
 {
     public class ContactViewModels
     {
-        [Required]
-        [MinLength(5)]
+        [Required(ErrorMessage = "Campo obrigatório") ]
+        [MinLength(5, ErrorMessage = "Campo nome não pode ser menor que 5 caractere")]
         public string Name { get; set; }
         [Required]
         [EmailAddress]
