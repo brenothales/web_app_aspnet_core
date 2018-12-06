@@ -25,7 +25,7 @@ namespace WebAppAspnetcore.Controllers
         }
 
 
-        // GET: /<controller>/
+        [HttpGet("/")]
         public IActionResult Index()
         {
             return View();

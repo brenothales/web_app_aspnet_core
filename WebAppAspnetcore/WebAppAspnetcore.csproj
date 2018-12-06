@@ -21,6 +21,7 @@
     <Folder Include="Services\" />
     <Folder Include="Data\" />
     <Folder Include="Data\Entities\" />
+    <Folder Include="Controllers\v2\" />
   </ItemGroup>
 
   <ItemGroup>
