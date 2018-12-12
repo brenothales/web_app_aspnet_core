@@ -20,6 +20,11 @@ namespace WebAppAspnetcore.Data
             _logger = logger;
         }
 
+        public void AddEntity(object model)
+        {
+            _ctx.Add(model);
+        }
+
         public IEnumerable<Order> GetAllOrders()
         {
             return _ctx.Orders
@@ -30,7 +35,8 @@ namespace WebAppAspnetcore.Data
 
         public Order GetAllOrdersById(int id)
         {
-            return _ctx.Orders.Include(o => o.Items)
+            return _ctx.Orders
+                       .Include(o => o.Items)
                        .ThenInclude(i => i.Product)
                        .Where(o => o.Id == id)
                        .FirstOrDefault();
@@ -61,9 +67,6 @@ namespace WebAppAspnetcore.Data
             return _ctx.SaveChanges() > 0;
         }
 
-        public bool SaveChanges()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

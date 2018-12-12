@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebAppAspnetcore.Data;
+using WebAppAspnetcore.Data.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -51,6 +52,29 @@ namespace WebAppAspnetcore.Controllers
                 return BadRequest("Failed to get orders");
             }
         }
+        [HttpPost]
+        public IActionResult Post([FromBody]Order model)
+        {
+            try
+            {
+                _repository.AddEntity(model);
+
+               if (_repository.SaveAll())
+                {
+                    return Created($"/api/orders/{model.Id}", model);
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError($"Falha para a salvar uma nova order: {ex}");
+            }
+
+            return BadRequest("Falha para salvar nova ordem");
+        }   
+
+
     }
 
 }
