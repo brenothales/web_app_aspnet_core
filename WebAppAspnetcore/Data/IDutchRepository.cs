@@ -10,7 +10,7 @@ namespace WebAppAspnetcore.Data
 
 
         IEnumerable<Order> GetAllOrders();
-        Order GetAllOrdersById(int id);
+        Order GetOrdersById(int id);
 
         bool SaveAll();
         void AddEntity(object model);

@@ -33,7 +33,7 @@ namespace WebAppAspnetcore.Data
                        .ToList();
         }
 
-        public Order GetAllOrdersById(int id)
+        public Order GetOrdersById(int id)
         {
             return _ctx.Orders
                        .Include(o => o.Items)

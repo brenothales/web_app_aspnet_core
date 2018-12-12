@@ -47,7 +47,7 @@ namespace WebAppAspnetcore.Controllers
         {
             try
             {
-                var order = _repository.GetAllOrdersById(id);
+                var order = _repository.GetOrdersById(id);
 
                 if (order != null) return Ok(_mapper.Map<Order, OrderViewModels>(order));
                 else return NotFound();
