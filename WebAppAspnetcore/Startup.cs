@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +32,7 @@ namespace WebAppAspnetcore
             {
                 cfg.UseSqlServer(_config.GetConnectionString("DutchConnection"));
             });
+            services.AddAutoMapper();
             services.AddTransient<IMailService, NullMailService>();
             services.AddTransient<DutchSeeder>();
             services.AddScoped<IDutchRepository, DutchRepository>();

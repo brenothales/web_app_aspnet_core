@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebAppAspnetcore.Data;
@@ -17,11 +18,15 @@ namespace WebAppAspnetcore.Controllers
     {
         private readonly IDutchRepository _repository;
         private readonly ILogger<OrdersController> _logger;
+        private readonly IMapper _mapper;
 
-        public OrdersController(IDutchRepository repository, ILogger<OrdersController> logger)
+        public OrdersController(IDutchRepository repository, 
+                                ILogger<OrdersController> logger,
+                                IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -29,7 +34,7 @@ namespace WebAppAspnetcore.Controllers
         {
             try
             {
-                return Ok(_repository.GetAllOrders());
+                return Ok(_mapper.Map<IEnumerable<Order>, IEnumerable<OrderViewModels>>(_repository.GetAllOrders()));
             }
             catch(Exception ex)
             {
@@ -44,7 +49,7 @@ namespace WebAppAspnetcore.Controllers
             {
                 var order = _repository.GetAllOrdersById(id);
 
-                if (order != null) return Ok(order);
+                if (order != null) return Ok(_mapper.Map<Order, OrderViewModels>(order));
                 else return NotFound();
             }
             catch (Exception ex)
@@ -60,12 +65,7 @@ namespace WebAppAspnetcore.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var newOrder = new Order()
-                    {
-                        OrderDate = model.OrderDate,
-                        OrderNumber = model.OrderNumber,
-                        Id = model.OrderId
-                    };
+                    var newOrder = _mapper.Map<OrderViewModels, Order>(model);
 
                     if (newOrder.OrderDate == DateTime.MinValue)
                     {
@@ -75,14 +75,7 @@ namespace WebAppAspnetcore.Controllers
 
                     if (_repository.SaveAll())
                     {
-                        var vm = new OrderViewModels()
-                        {
-                            OrderId = newOrder.Id,
-                            OrderDate = newOrder.OrderDate, 
-                            OrderNumber = newOrder.OrderNumber
-                        };
-
-                        return Created($"/api/orders/{vm.OrderId}", vm);
+                        return Created($"/api/orders/{newOrder.Id}", _mapper.Map<Order, OrderViewModels>(newOrder));
                     }
                 }
                 else
