@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using WebAppAspnetcore.Data.Entities;
 
@@ -17,6 +18,22 @@ namespace WebAppAspnetcore.Data
         {
             _ctx = ctx;
             _logger = logger;
+        }
+
+        public IEnumerable<Order> GetAllOrders()
+        {
+            return _ctx.Orders
+                       .Include(o => o.Items)
+                       .ThenInclude(i => i.Product)
+                       .ToList();
+        }
+
+        public Order GetAllOrdersById(int id)
+        {
+            return _ctx.Orders.Include(o => o.Items)
+                       .ThenInclude(i => i.Product)
+                       .Where(o => o.Id == id)
+                       .FirstOrDefault();
         }
 
         public IEnumerable<Product> GetAllProducts()

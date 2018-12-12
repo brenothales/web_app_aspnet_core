@@ -7,6 +7,11 @@ namespace WebAppAspnetcore.Data
     {
         IEnumerable<Product> GetAllProducts();
         IEnumerable<Product> GetProductsByCategory(string category);
+
+
+        IEnumerable<Order> GetAllOrders();
+        Order GetAllOrdersById(int id);
+
         bool SaveChanges();
     }
 }
