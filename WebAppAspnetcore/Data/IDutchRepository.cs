@@ -9,7 +9,7 @@ namespace WebAppAspnetcore.Data
         IEnumerable<Product> GetProductsByCategory(string category);
 
 
-        IEnumerable<Order> GetAllOrders();
+        IEnumerable<Order> GetAllOrders(bool includeItems);
         Order GetOrdersById(int id);
 
         bool SaveAll();
