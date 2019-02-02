@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'Ubmacbook-pro
+  vmImage: 'macbook-pro'
 variables:
   buildConfiguration: 'Release'
 
